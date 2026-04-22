@@ -16,10 +16,8 @@ public class GatewayConfig {
                         .uri("http://localhost:8081"))
 
                 .route("Land_Service", r -> r
-                        .path("/lands/**","/admin/lands/**","/public/**")
+                        .path("/lands/**","/admin/lands/**","/public/**","/upload")
                         .uri("http://localhost:8082"))
-
-
                 .build();
     }
 }

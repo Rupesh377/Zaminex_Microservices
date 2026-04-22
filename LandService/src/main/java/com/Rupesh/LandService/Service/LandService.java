@@ -21,11 +21,11 @@ public class LandService {
     }
 
 
-        public LandDTO createLand(CreateLandDTO dto, Long userId, String phone , String role) throws AccessDeniedException {
+    public LandDTO createLand(CreateLandDTO dto, Long userId, String phone , String role) throws AccessDeniedException {
         if (!"SELLER".equals(role)) {
             throw new AccessDeniedException("Only sellers can post land");
         }
-
+        System.out.println("USER ID = " + userId);
         Land land = Land.builder()
                 .title(dto.getTitle())
                 .description(dto.getDescription())
@@ -38,6 +38,7 @@ public class LandService {
                 .ownerId(userId)
                 .contact(dto.getContact())
                 .imageUrls(dto.getImageUrls())
+                .active(true)
                 .build();
 
         landRepository.save(land);

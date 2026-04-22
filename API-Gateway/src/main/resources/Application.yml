@@ -13,4 +13,4 @@ spring:
         - id: Land_Service
           uri: http://localhost:8082
           predicates:
-            - Path=/lands/**,/admin/lands/**,/public/**
+            - Path=/lands/**,/admin/lands/**,/public/**,"/upload"

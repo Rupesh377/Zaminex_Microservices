@@ -28,7 +28,7 @@ public class JwtUtil {
     }
 
     public Long extractUserId(String token) {
-        return extractAllClaims(token).get("userId", Long.class);
+        return extractAllClaims(token).get("Id", Long.class);
     }
 
     public String extractPhone(String token) {

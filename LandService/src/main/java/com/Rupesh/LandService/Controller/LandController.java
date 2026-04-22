@@ -24,7 +24,7 @@ public class LandController {
     }
 
     @PreAuthorize("hasRole('SELLER')")
-    @PutMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<LandDTO> createLand(@RequestBody CreateLandDTO landDTO ,
                                               @RequestHeader("Authorization") String token) throws AccessDeniedException {
         Long userId = jwtUtil.extractUserId(token);

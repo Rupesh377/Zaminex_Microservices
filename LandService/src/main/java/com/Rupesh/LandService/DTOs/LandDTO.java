@@ -25,6 +25,6 @@ public class LandDTO {
     private String contact;
     private List<String> imageUrls;
 
-    private boolean active;
+    private boolean active=true;
 
 }

@@ -46,4 +46,5 @@ public class CreateLandDTO {
     private String contact;
     @NotNull(message = "Image list is required")
     private List<String> imageUrls;
+
 }

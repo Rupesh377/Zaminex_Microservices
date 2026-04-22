@@ -13,7 +13,7 @@ public class CloudinaryConfig {
     @Bean
     public Cloudinary cloudinary() {
         return new Cloudinary(Map.of(
-                "cloud_name", "Zaminex",
+                "cloud_name", "ddoipwsew",
                 "api_key", "845652632725894",
                 "api_secret", "MkjmK4mdFMu0PeFMCVTkKhL5xGw"));
     }
