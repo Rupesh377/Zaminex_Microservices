@@ -11,17 +11,14 @@ public class GatewayConfig {
     @Bean
     public RouteLocator customRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("", r -> r
-                        .path("//**")
+                .route("User_Service", r -> r
+                        .path("/auth/**","/user/**","/admin/users/**")
                         .uri("http://localhost:8081"))
 
-                .route("", r -> r
-                        .path("//**")
-                        .uri("http://localhost:8083"))
-
-                .route("", r -> r
-                        .path("//**")
+                .route("Land_Service", r -> r
+                        .path("/lands/**","/admin/lands/**","/public/**")
                         .uri("http://localhost:8082"))
+
 
                 .build();
     }
