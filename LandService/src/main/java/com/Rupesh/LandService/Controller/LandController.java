@@ -1,5 +1,6 @@
 package com.Rupesh.LandService.Controller;
 
+import com.Rupesh.LandService.DTOs.CreateLandDTO;
 import com.Rupesh.LandService.DTOs.LandDTO;
 import com.Rupesh.LandService.Config.JwtUtil;
 import com.Rupesh.LandService.Service.LandService;
@@ -24,7 +25,7 @@ public class LandController {
 
     @PreAuthorize("hasRole('SELLER')")
     @PutMapping("/create")
-    public ResponseEntity<LandDTO> createLand(@RequestBody LandDTO landDTO ,
+    public ResponseEntity<LandDTO> createLand(@RequestBody CreateLandDTO landDTO ,
                                               @RequestHeader("Authorization") String token) throws AccessDeniedException {
         Long userId = jwtUtil.extractUserId(token);
         String phone = jwtUtil.extractPhone(token);

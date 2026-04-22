@@ -3,9 +3,17 @@ package com.Rupesh.LandService.DTOs;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateLandDTO {
 
     @NotBlank(message = "Title is required")
@@ -34,6 +42,8 @@ public class CreateLandDTO {
     @NotBlank(message = "Pincode is required")
     private String pincode;
 
+    @NotBlank(message = "Contact is required")
+    private String contact;
     @NotNull(message = "Image list is required")
     private List<String> imageUrls;
 }

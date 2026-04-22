@@ -1,5 +1,6 @@
 package com.Rupesh.LandService.Service;
 
+import com.Rupesh.LandService.DTOs.CreateLandDTO;
 import com.Rupesh.LandService.DTOs.LandDTO;
 import com.Rupesh.LandService.DTOs.LandResponseToUserDTO;
 import com.Rupesh.LandService.Entity.Land;
@@ -20,7 +21,7 @@ public class LandService {
     }
 
 
-    public LandDTO createLand(LandDTO dto, Long userId, String phone , String role) throws AccessDeniedException {
+        public LandDTO createLand(CreateLandDTO dto, Long userId, String phone , String role) throws AccessDeniedException {
         if (!"SELLER".equals(role)) {
             throw new AccessDeniedException("Only sellers can post land");
         }
@@ -37,7 +38,6 @@ public class LandService {
                 .ownerId(userId)
                 .contact(dto.getContact())
                 .imageUrls(dto.getImageUrls())
-                .active(dto.isActive())
                 .build();
 
         landRepository.save(land);
