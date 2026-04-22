@@ -4,6 +4,7 @@ import com.Rupesh.LandService.DTOs.LandDTO;
 import com.Rupesh.LandService.Config.JwtUtil;
 import com.Rupesh.LandService.Service.LandService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
@@ -21,6 +22,7 @@ public class LandController {
         this.jwtUtil = jwtUtil;
     }
 
+    @PreAuthorize("hasRole('SELLER')")
     @PutMapping("/create")
     public ResponseEntity<LandDTO> createLand(@RequestBody LandDTO landDTO ,
                                               @RequestHeader("Authorization") String token) throws AccessDeniedException {
@@ -30,6 +32,7 @@ public class LandController {
         return ResponseEntity.ok(landService.createLand(landDTO, userId, phone ,role));
     }
 
+    @PreAuthorize("hasRole('SELLER')")
     @GetMapping("/myLands")
     public ResponseEntity<List<LandDTO>> getLand(@RequestHeader("Authorization") String token)
     {
@@ -37,12 +40,14 @@ public class LandController {
         return ResponseEntity.ok(landService.getMyLands(userId));
     }
 
+    @PreAuthorize("hasRole('SELLER')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id, @RequestHeader("Authorization") String token) throws AccessDeniedException {
         Long userId= jwtUtil.extractUserId(token);
         return ResponseEntity.ok(landService.deleteLandById(id , userId));
     }
 
+    @PreAuthorize("hasRole('SELLER')")
     @GetMapping("/get/{id}")
     public ResponseEntity<LandDTO> getById(@PathVariable Long id ,@RequestHeader("Authorization") String token) throws AccessDeniedException {
         Long userId= jwtUtil.extractUserId(token);

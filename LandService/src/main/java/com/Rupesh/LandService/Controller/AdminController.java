@@ -6,6 +6,7 @@ import com.Rupesh.LandService.DTOs.LandResponseToUserDTO;
 import com.Rupesh.LandService.Entity.Land;
 import com.Rupesh.LandService.Repository.LandRepository;
 import org.apache.catalina.Role;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
@@ -24,6 +25,7 @@ public class AdminController {
         this.jwtUtil = jwtUtil;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get")
     public List<LandResponseToUserDTO> getAllLands() {
         return landRepository.findAll()
@@ -41,6 +43,7 @@ public class AdminController {
                         )).toList();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/deactivate")
     public String deactivateLand(@PathVariable Long id , @RequestHeader("Authorization") String token) throws AccessDeniedException {
 
