@@ -3,11 +3,13 @@ import com.rupesh.User_Service.DTOs.*;
 import com.rupesh.User_Service.Entity.OTP;
 import com.rupesh.User_Service.Entity.User;
 import com.rupesh.User_Service.Enum.Role;
+import com.rupesh.User_Service.ExceptionalHandling.ResourceNotFound;
 import com.rupesh.User_Service.Repository.OTPRepository;
 import com.rupesh.User_Service.Repository.UserRepository;
 import com.rupesh.User_Service.Security.JwtUtil;
 import jakarta.transaction.Transactional;
 import org.jspecify.annotations.Nullable;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ public class UserService {
 
         if(userRepository.existsByPhone(signUpDTO.getPhone()))
         {
-            throw  new RuntimeException("User Already Exists with this number");
+            throw new RuntimeException("User Already Exists with this number");
         }
         User user=User.builder()
                 .name(signUpDTO.getName())
@@ -53,11 +55,11 @@ public class UserService {
     public String requestOtp(RequestOtp requestOtp) {
 
         User user =userRepository.findByPhone(requestOtp.getPhone()).orElseThrow(()
-                -> new RuntimeException("User not found "));
+                -> new ResourceNotFound("User not found "));
 
         if(!user.isEnabled())
         {
-            throw new RuntimeException("User is Blocked");
+            throw new AccessDeniedException("User is Blocked");
         }
         String otp=String.valueOf(1000 + new Random().nextInt(9000));
 
@@ -76,7 +78,7 @@ public class UserService {
     public  JwtResponseDTO verifyOTP(VerifyOTPDTO verifyOTPDTO) {
 
         User user = userRepository.findByPhone(verifyOTPDTO.getPhone())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFound("User not found"));
 
         OTP otp= otpRepository.findByPhone(verifyOTPDTO.getPhone()).orElseThrow(()->
                 new RuntimeException("OTP Not Found"));
@@ -99,9 +101,9 @@ public class UserService {
 
 
     public String changeRole(String phone) {
-        User user=userRepository.findByPhone(phone).orElseThrow(()-> new RuntimeException("User Not Found"));
+        User user=userRepository.findByPhone(phone).orElseThrow(()-> new ResourceNotFound("User Not Found"));
         if(!user.isEnabled())
-            throw new RuntimeException("User is Blocked");
+            throw new AccessDeniedException("User is Blocked");
 
         if(user.getRole().equals(Role.SELLER))
             return "Already a Seller";
@@ -118,7 +120,7 @@ public class UserService {
     public SignUpResponseDTO getProfile(String phone) {
         User user=userRepository.findByPhone(phone).orElseThrow(()-> new RuntimeException("User Not Found"));
         if(!user.isEnabled())
-            throw new RuntimeException("User is Blocked");
+            throw new AccessDeniedException("User is Blocked");
 
         return new SignUpResponseDTO(user.getId() , user.getPhone() , user.getName() , user.getRole());
     }
@@ -128,7 +130,7 @@ public class UserService {
     public SignUpResponseDTO ChangeName(UpdateNameDTO name, String phone) {
 
         User user = userRepository.findByPhone(phone)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFound("User not found"));
 
         user.setName(name.getName());
         userRepository.save(user);

@@ -1,11 +1,8 @@
-package com.rupesh.User_Service.ExceptionalHandling;
+package com.Rupesh.LandService.Exceptionhandling;
 
-import com.rupesh.User_Service.DTOs.ApiError;
-import org.hibernate.annotations.NotFound;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import com.Rupesh.LandService.DTOs.ApiError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandling {
+
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ApiError> handle(RuntimeException ex) {
@@ -26,14 +24,11 @@ public class GlobalExceptionHandling {
         return new ResponseEntity<>(new ApiError(ex.getMessage(), 403, LocalDateTime.now()), HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler(ResourceNotFound.class)
-    public ResponseEntity<ApiError> handleNotFound(ResourceNotFound ex) {
-        return new ResponseEntity<>(new ApiError(ex.getMessage(), 404, LocalDateTime.now()), HttpStatus.NOT_FOUND);
-    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleAll(Exception ex) {
         return new ResponseEntity<>(
                 new ApiError("Something went wrong", 500, LocalDateTime.now()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @ExceptionHandler()
 }
