@@ -115,7 +115,8 @@ public class LandService {
     }
 
     public List<LandResponseToUserDTO> getAllLands() {
-        return landRepository.findAll()
+
+        return landRepository.findByActiveTrue()
                 .stream().map(land -> new LandResponseToUserDTO(
                         land.getTitle(),
                         land.getDescription(),
