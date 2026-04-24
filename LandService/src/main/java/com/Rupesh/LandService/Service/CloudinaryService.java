@@ -1,5 +1,6 @@
 package com.Rupesh.LandService.Service;
 
+import com.Rupesh.LandService.Exceptionhandling.ResourceNotFound;
 import com.cloudinary.Cloudinary;
 import lombok.Setter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +26,7 @@ public class CloudinaryService {
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file")MultipartFile file) {
         if (file == null) {
-            throw new RuntimeException("File is null bro");
+            throw new ResourceNotFound("File is null bro");
         }
         try {
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(), Map.of());

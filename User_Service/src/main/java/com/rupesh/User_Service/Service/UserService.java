@@ -83,14 +83,15 @@ public class UserService {
         OTP otp= otpRepository.findByPhone(verifyOTPDTO.getPhone()).orElseThrow(()->
                 new RuntimeException("OTP Not Found"));
 
-        if(otp.getExpiry().isBefore(LocalDateTime.now()))
-        {
-            throw new RuntimeException("OTP Expired");
-        }
         if(!otp.getCode().equals(verifyOTPDTO.getCode()))
         {
             throw new RuntimeException("Invalid OTP");
         }
+        if(otp.getExpiry().isBefore(LocalDateTime.now()))
+        {
+            throw new RuntimeException("OTP Expired");
+        }
+
         if (!user.isEnabled())
             throw  new AccessDeniedException("Yor are blocked");
 

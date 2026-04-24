@@ -24,11 +24,14 @@ public class GlobalExceptionHandling {
         return new ResponseEntity<>(new ApiError(ex.getMessage(), 403, LocalDateTime.now()), HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(ResourceNotFound.class)
+    public ResponseEntity<ApiError> handleNotFound(ResourceNotFound ex) {
+        return new ResponseEntity<>(new ApiError(ex.getMessage(), 404, LocalDateTime.now()), HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleAll(Exception ex) {
         return new ResponseEntity<>(
                 new ApiError("Something went wrong", 500, LocalDateTime.now()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    @ExceptionHandler()
 }

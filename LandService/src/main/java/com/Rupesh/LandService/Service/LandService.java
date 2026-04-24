@@ -4,6 +4,7 @@ import com.Rupesh.LandService.DTOs.CreateLandDTO;
 import com.Rupesh.LandService.DTOs.LandDTO;
 import com.Rupesh.LandService.DTOs.LandResponseToUserDTO;
 import com.Rupesh.LandService.Entity.Land;
+import com.Rupesh.LandService.Exceptionhandling.ResourceNotFound;
 import com.Rupesh.LandService.Repository.LandRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,6 @@ public class LandService {
         if (!"SELLER".equals(role)) {
             throw new AccessDeniedException("Only sellers can post land");
         }
-        System.out.println("USER ID = " + userId);
         Land land = Land.builder()
                 .title(dto.getTitle())
                 .description(dto.getDescription())
@@ -88,7 +88,7 @@ public class LandService {
     public String deleteLandById(Long landId, Long userId) throws AccessDeniedException {
 
         Land land = landRepository.findById(landId)
-                .orElseThrow(() -> new RuntimeException("Land not found"));
+                .orElseThrow(() -> new ResourceNotFound("Land not found"));
 
         if (!land.getOwnerId().equals(userId)) {
             throw new AccessDeniedException("Not your land");
@@ -106,7 +106,7 @@ public class LandService {
 
     public LandDTO getLandById(Long landId, Long userId) throws AccessDeniedException {
         Land land = landRepository.findById(landId)
-                .orElseThrow(() -> new RuntimeException("Land not found"));
+                .orElseThrow(() -> new ResourceNotFound("Land not found"));
 
         if (!land.getOwnerId().equals(userId)) {
             throw new AccessDeniedException("Not your land");
