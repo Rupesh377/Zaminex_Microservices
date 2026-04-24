@@ -30,6 +30,7 @@ public class LandController {
         Long userId = jwtUtil.extractUserId(token);
         String phone = jwtUtil.extractPhone(token);
         String role = jwtUtil.extractRole(token);
+
         return ResponseEntity.ok(landService.createLand(landDTO, userId, phone ,role));
     }
 

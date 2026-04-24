@@ -4,7 +4,9 @@ package com.rupesh.User_Service.Entity;
 import com.rupesh.User_Service.Enum.Role;
 import com.rupesh.User_Service.Repository.UserRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AdminInitializer {
 
     private final UserRepository userRepository;

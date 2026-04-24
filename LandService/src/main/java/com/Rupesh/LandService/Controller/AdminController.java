@@ -27,8 +27,13 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get")
-    public List<LandResponseToUserDTO> getAllLands() {
-        return landRepository.findAll()
+    public List<LandResponseToUserDTO> getAllLands(@RequestHeader("Authorization") String token) throws AccessDeniedException {
+        String role = jwtUtil.extractRole(token);
+
+        if (!"ADMIN".equals(role)) {
+            throw new AccessDeniedException("Only ADMIN can deactivate land");
+        }
+        return landRepository.findByActiveTrue()
                 .stream().map(land -> new LandResponseToUserDTO(
                         land.getTitle(),
                         land.getDescription(),
