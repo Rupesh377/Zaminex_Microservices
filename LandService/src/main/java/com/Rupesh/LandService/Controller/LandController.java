@@ -55,4 +55,10 @@ public class LandController {
         Long userId= jwtUtil.extractUserId(token);
         return ResponseEntity.ok(landService.getLandById(id , userId));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<LandDTO> updateLand(@PathVariable Long id, @RequestBody LandDTO request , @RequestHeader("Authorization") String token) {
+        Long userId= jwtUtil.extractUserId(token);
+        return ResponseEntity.ok(landService.updateLand(id, request,userId));
+    }
 }

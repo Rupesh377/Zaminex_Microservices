@@ -6,6 +6,7 @@ import com.Rupesh.LandService.DTOs.LandResponseToUserDTO;
 import com.Rupesh.LandService.Entity.Land;
 import com.Rupesh.LandService.Exceptionhandling.ResourceNotFound;
 import com.Rupesh.LandService.Repository.LandRepository;
+import org.jspecify.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -129,5 +130,29 @@ public class LandService {
                         land.getContact(),
                         land.getImageUrls()
                 )).toList();
+    }
+
+    public LandDTO updateLand(Long id, LandDTO dto, Long userId) {
+
+        Land land = landRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("Land not found with id: " + id));
+
+       Land land1=Land.builder()
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .price(dto.getPrice())
+                .area(dto.getArea())
+                .state(dto.getState())
+                .city(dto.getCity())
+                .locality(dto.getLocality())
+                .pincode(dto.getPincode())
+                .ownerId(userId)
+                .contact(dto.getContact())
+                .imageUrls(dto.getImageUrls())
+                .active(true)
+                .build();
+        landRepository.save(land1);
+
+        return mapToLandDTO(land1);
     }
 }

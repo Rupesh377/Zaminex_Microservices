@@ -8,8 +8,6 @@ import com.rupesh.User_Service.Repository.OTPRepository;
 import com.rupesh.User_Service.Repository.UserRepository;
 import com.rupesh.User_Service.Security.JwtUtil;
 import jakarta.transaction.Transactional;
-import org.jspecify.annotations.Nullable;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
