@@ -12,6 +12,9 @@ Property Listings
 
 🏗️ Architecture
 Microservices Pattern
+
 API Gateway for routing requests
+
 Service-to-Service Communication (REST)
+
 Database per service
