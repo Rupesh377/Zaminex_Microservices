@@ -5,10 +5,13 @@ Zaminex is a scalable land-selling platform designed for Tier 2–3 cities. This
 🚀 Overview
 This project follows a microservices architecture to ensure scalability, maintainability, and independent deployment of services.
 
+
 Each service handles a specific domain:
 
-User Management ,
+User Management 
+
 Property Listings
+
 
 🏗️ Architecture
 Microservices Pattern
