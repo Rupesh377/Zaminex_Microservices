@@ -7,7 +7,7 @@ This project follows a microservices architecture to ensure scalability, maintai
 
 Each service handles a specific domain:
 
-User Management
+User Management ,
 Property Listings
 
 🏗️ Architecture
